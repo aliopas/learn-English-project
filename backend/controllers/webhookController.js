@@ -12,14 +12,19 @@ const generateRandomPassword = () => {
 // @access  Public (but should be verified with webhook secret)
 export const sallaOrderWebhook = async (req, res) => {
     try {
-        console.log('📥 Received Salla Webhook:', JSON.stringify(req.body, null, 2));
+        console.log('------------------------------------------------');
+        console.log('📥 DEAD SIMPLE LOG - BODY:', req.body);
+        console.log('------------------------------------------------');
+        console.log('📥 JSON STRINGIFIED:', JSON.stringify(req.body, null, 2));
 
         // Parse Salla Payload Structure
         const { event, data } = req.body;
 
-        // Allow order.created and order.updated events
-        if (event !== 'order.created' && event !== 'order.updated') {
-            console.log(`ℹ️ Ignoring event: ${event}`);
+        // Allow order.created and order.updated events (Safe check)
+        // Convert event to string just in case
+        const eventName = String(event || '');
+        if (eventName !== 'order.created' && eventName !== 'order.updated') {
+            console.log(`ℹ️ Ignoring event: ${eventName}`);
             return res.status(200).json({ message: 'Event ignored' });
         }
 
