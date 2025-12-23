@@ -464,7 +464,7 @@ const Flashcards = () => {
             <div className="flex items-center gap-1">
               <Keyboard className="w-4 h-4" />
               <span className="font-mono bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">Space</span>
-              <span>للقلب</span>
+              <span>إظهار النتيجة</span>
             </div>
             <div className="flex items-center gap-1">
               <span className="font-mono bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">←</span>
@@ -611,7 +611,7 @@ const Flashcards = () => {
                       </div>
                       <div className="text-gray-400 hover:text-purple-600 dark:hover:text-white transition-colors flex items-center gap-2 text-sm">
                         <RotateCcw className="w-4 h-4" />
-                        اضغط أو Space للترجمة
+                        اضغط أو Space لإظهار النتيجة
                       </div>
                     </motion.div>
                   ) : (
