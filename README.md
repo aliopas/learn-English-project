@@ -17,23 +17,26 @@ It features a **custom Node.js backend** for robust state management, a **dynami
 
 ---
 
-## ✨ Key Features
+## ✨ Key Features & Technologies
 
 ### 📚 Structured Learning Engine
-- **120-Day Smart Roadmap**: A locked progression system that guides users through A1, A2, B1, and B2 levels.
-- **Dynamic Lesson Content**: Lessons include video player integration, PDF grammar dumps (Google Docs/Drive embed), and rich text vocabulary lists.
-- **Content Availability Check**: The system intelligently checks database content availability to manage "Coming Soon" states for future lessons.
+- **120-Day Smart Roadmap**: A locked progression system guided by `PostgreSQL` logic and `Node.js` controllers.
+- **Dynamic Lesson Content**: Integrates `iframe` for videos, **Google Drive Embed** for grammar PDFs, and `React` components for interactive quizzes.
+- **Content Availability Check**: Uses `useSmartLessons` hook + `TanStack Query` to predictively load content and handle "Coming Soon" states.
 
 ### 👤 Gamification & User Retention
-- **🔥 Streak System**: Tracks daily activity to build learning habits.
-- **Skill Radar**: Visualizes progress across 4 key skills: **Listening, Speaking, Reading, Grammar**.
-- **Level & Days Counter**: Dashboard widgets show exactly how many days remain to reach the next proficiency level.
-- **Flashcards Review**: A dedicated Spaced Repetition-style review system for vocabulary retention.
+- **🔥 Streak System**: Powered by robust backend logic `cron jobs` (planned) and `PostgreSQL` date tracking to build habits.
+- **Skill Radar**: Visualized using **Custom SVG Components** (`ProgressCircle`) to track Listening, Speaking, Reading, and Grammar.
+- **Flashcards Review**: Implements **Spaced Repetition (SRS)** algorithms in plain JavaScript, animated with `framer-motion` for swipe effects.
+- **Level & Days Counter**: Real-time progress calculation using `Date-fns` logic (or native JS Date) relative to the course start date.
 
 ### 🛡️ Security & Performance
-- **Custom Authentication**: Secure, HttpOnly Cookie-based JWT authentication (Login, Register, Password Reset).
-- **Terms & Conditions**: Integrated modal for GDPR/Policy compliance acknowledgement.
-- **Optimized Performance**: Uses React Query-like caching strategies and smart batch fetching for roadmap data to minimize API calls.
+- **Custom Authentication**: `JWT` (JSON Web Tokens) stored in **HttpOnly Cookies** for XSS protection.
+- **Password Security**: `bcryptjs` for hashing and salting passwords.
+- **Optimized Performance**:
+  - **Client State**: `TanStack Query` for request deduplication and caching.
+  - **Animations**: `Framer Motion` for 60fps GPU-accelerated transitions.
+  - **Build**: `Vite` for instant HMR and optimized production builds.
 
 ---
 
@@ -57,6 +60,22 @@ The project follows a **Monorepo-style** structure with separated Frontend and B
   - `bcryptjs` for password hashing.
   - `jsonwebtoken` for secure session management.
   - `cors` for cross-origin resource sharing.
+
+---
+
+## ⚡ Caching & Optimization Strategy
+
+To ensure a lightning-fast user experience and offline resilience, the application implements a multi-layer caching strategy:
+
+### 1. Local Storage (Persistence Layer)
+- **Authentication**: JWT Tokens are persisted to maintain user sessions across reloads.
+- **User Preferences**: Theme settings (`dark`/`light` mode) are saved locally for a personalized experience.
+- **Progress Resilience**: Lesson answers and Flashcard SRS states are auto-saved locally. This acts as a "fail-safe" mechanism, allowing users to restore their exact progress if they accidentally close the browser or lose internet connection before submitting.
+
+### 2. Smart Server-State Caching (TanStack Query)
+- **API Response Caching**: Lesson content and user profiles are cached in memory to eliminate redundant network requests.
+- **Background Prefetching**: The app implements a **Smart Prefetching** system (`useSmartLessons`) that predicts the user's next move. When a user opens a lesson, the system automatically fetches the *next 2 upcoming lessons* in the background, making transitions instantaneous.
+- **Stale-While-Revalidate**: Data remains available immediately while silently updating in the background to ensure fresh content.
 
 ---
 
