@@ -49,7 +49,7 @@ const Roadmap = () => {
   // Generate lesson data for display
   const generateLessonData = (day, levelKey) => {
     const hasContent = availableDays.includes(day)
-    const title = lessonTitles[day] || (hasContent ? `درس اليوم ${day}` : 'قيد التطوير')
+    const title = lessonTitles[day] || (hasContent ? `درس اليوم ${day}` : 'قريباً')
     const level = LEVELS[levelKey]
 
     return {
