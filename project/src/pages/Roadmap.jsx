@@ -45,7 +45,6 @@ const Roadmap = () => {
       navigate(`/lesson/${day}`)
     }
   }
-
   // Generate lesson data for display
   const generateLessonData = (day, levelKey) => {
     const hasContent = availableDays.includes(day)
@@ -55,10 +54,10 @@ const Roadmap = () => {
     return {
       day: day,
       title: title,
-      description: hasContent ? 'انقر للبدء' : 'سيتم إضافة هذا الدرس قريباً',
+      description: hasContent ? 'انقر للبدء' : 'سيتم ظهور هذا الدرس قريباً',
       level: levelKey,
       levelName: level.name,
-      estimatedTime: hasContent ? '60 دقيقة' : '~ دقيقة',
+      estimatedTime: hasContent ? '20 دقيقة' : '~ دقيقة',
       skillFocus: hasContent ? 'متنوع' : 'قريباً'
     }
   }
